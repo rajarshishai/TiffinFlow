@@ -1,0 +1,214 @@
+<div class="tiffin-container">
+  <!-- Header Section -->
+  <header class="header">
+    <span class="badge-pill">
+      <span class="pulse-dot"></span> Freshly Cooked • Delivered Hot
+    </span>
+    <h1 class="main-title">Choose Your <span class="highlight">Tiffin Flow</span> Experience</h1>
+    <p class="subtitle">Home-style meals delivered on your schedule. Flexible, customizable, and hassle-free.</p>
+  </header>
+
+  <!-- Flexi-Pause Guarantee Banner -->
+  <div class="guarantee-banner">
+    <div class="banner-icon">🔄</div>
+    <div class="banner-text">
+      <strong>Zero Risk Flexi-Pause Policy:</strong> Going out of town? Pause or skip meals directly in app before 7 AM with <strong>100% wallet rollover</strong> to your next billing cycle.
+    </div>
+  </div>
+
+  <!-- Main Configurator Card -->
+  <div class="configurator-card">
+    
+    <!-- 1. Billing Cycle Selector -->
+    <div class="section-block">
+      <label class="block-label">1. Choose Billing Duration</label>
+      <div class="toggle-group">
+        <button 
+          class="toggle-btn" 
+          [class.active]="selectedCycle() === 'weekly'"
+          (click)="setCycle('weekly')">
+          Weekly
+        </button>
+        
+        <button 
+          class="toggle-btn" 
+          [class.active]="selectedCycle() === 'monthly'"
+          (click)="setCycle('monthly')">
+          Monthly
+          <span class="mini-badge">Popular</span>
+        </button>
+        
+        <button 
+          class="toggle-btn yearly-btn" 
+          [class.active]="selectedCycle() === 'yearly'"
+          (click)="setCycle('yearly')">
+          Yearly
+          <span class="glow-badge">20% EXTRA OFF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Meal Frequency & Slot Selector -->
+    <div class="section-grid">
+      <div class="section-block">
+        <label class="block-label">2. Daily Frequency</label>
+        <div class="toggle-group">
+          <button 
+            class="toggle-btn" 
+            [class.active]="selectedFrequency() === 1"
+            (click)="setFrequency(1)">
+            1 Meal / Day
+          </button>
+          <button 
+            class="toggle-btn" 
+            [class.active]="selectedFrequency() === 2"
+            (click)="setFrequency(2)">
+            2 Meals / Day
+          </button>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <label class="block-label">3. Meal Slot</label>
+        @if (selectedFrequency() === 1) {
+          <div class="toggle-group">
+            <button 
+              class="toggle-btn" 
+              [class.active]="selectedMealType() === 'lunch'"
+              (click)="setMealType('lunch')">
+              ☀️ Lunch
+            </button>
+            <button 
+              class="toggle-btn" 
+              [class.active]="selectedMealType() === 'dinner'"
+              (click)="setMealType('dinner')">
+              🌙 Dinner
+            </button>
+          </div>
+        } @else {
+          <div class="status-pill-active">
+            ☀️ Lunch + 🌙 Dinner (Both Included)
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- 3. Diet Preference Selector -->
+    <div class="section-block">
+      <label class="block-label">4. Dietary Preference</label>
+      <div class="options-grid">
+        <div 
+          class="option-card" 
+          [class.selected]="selectedDiet() === 'veg'"
+          (click)="setDiet('veg')">
+          <span class="diet-dot veg"></span>
+          <div>
+            <div class="option-title">Pure Veg</div>
+            <div class="option-sub">Classic North & South Indian Home Meal</div>
+          </div>
+        </div>
+
+        <div 
+          class="option-card" 
+          [class.selected]="selectedDiet() === 'non-veg'"
+          (click)="setDiet('non-veg')">
+          <span class="diet-dot non-veg"></span>
+          <div>
+            <div class="option-title">Non-Veg</div>
+            <div class="option-sub">Eggs, Chicken & Fish Special (3x/week)</div>
+          </div>
+        </div>
+
+        <div 
+          class="option-card" 
+          [class.selected]="selectedDiet() === 'fitness'"
+          (click)="setDiet('fitness')">
+          <span class="diet-dot fitness"></span>
+          <div>
+            <div class="option-title">High Protein</div>
+            <div class="option-sub">Macro-calculated for Gym & Fitness</div>
+          </div>
+        </div>
+
+        <div 
+          class="option-card" 
+          [class.selected]="selectedDiet() === 'jain'"
+          (click)="setDiet('jain')">
+          <span class="diet-dot jain"></span>
+          <div>
+            <div class="option-title">Jain</div>
+            <div class="option-sub">No Onion, Garlic or Root Vegetables</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Packaging Choice -->
+    <div class="section-block">
+      <label class="block-label">5. Packaging Type</label>
+      <div class="options-grid two-cols">
+        <div 
+          class="option-card" 
+          [class.selected]="selectedPackaging() === 'eco'"
+          (click)="setPackaging('eco')">
+          <span class="icon">🍱</span>
+          <div>
+            <div class="option-title">Insulated Stainless Steel Tiffin</div>
+            <div class="option-sub">Eco-Friendly, Keeps food piping hot for 4 hrs (Zero Cost)</div>
+          </div>
+        </div>
+
+        <div 
+          class="option-card" 
+          [class.selected]="selectedPackaging() === 'disposable'"
+          (click)="setPackaging('disposable')">
+          <span class="icon">♻️</span>
+          <div>
+            <div class="option-title">Biodegradable Disposable Trays</div>
+            <div class="option-sub">No dishwashing needed (+₹5 per meal)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Sneak Peek Action -->
+    <div class="menu-preview-wrapper">
+      <button class="btn-ghost" (click)="openMenuPreview()">
+        🔍 Sneak Peek This Week's Menu
+      </button>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Price Summary & Checkout Action -->
+    <div class="checkout-footer">
+      <div class="price-breakdown">
+        <div class="unit-price-line">
+          <span class="main-price">₹{{ effectivePricePerMeal() }}</span>
+          <span class="per-meal">/ meal</span>
+          @if (currentTier().savingsPercentage > 0) {
+            <span class="savings-tag">Save {{ currentTier().savingsPercentage }}%</span>
+          }
+        </div>
+        <div class="cycle-summary">
+          Total: <strong>₹{{ calculatedPrice() }}</strong> billed {{ selectedCycle() }} ({{ totalMealsPerMonth() }} meals)
+        </div>
+      </div>
+
+      <button class="btn-primary" (click)="proceedToCheckout()">
+        Subscribe Now &rarr;
+      </button>
+    </div>
+
+    <!-- Features Included List -->
+    <div class="features-block">
+      <div class="features-title">Included in your plan:</div>
+      <ul class="features-list">
+        @for (feature of currentTier().features; track feature) {
+          <li><span class="check">✓</span> {{ feature }}</li>
+        }
+      </ul>
+    </div>
+
+  </div>
+</div>

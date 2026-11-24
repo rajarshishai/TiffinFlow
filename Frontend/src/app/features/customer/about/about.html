@@ -1,0 +1,104 @@
+<div class="about-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <span class="badge">About Tiffin Flow</span>
+      <h1 class="hero-title">
+        Streamlining Daily Meals for <span class="highlight">Busy Lives</span> & <span class="highlight">Home Chefs</span>
+      </h1>
+      <p class="hero-subtitle">
+        TIFFIN FLOW is a smart SaaS ecosystem bridging the gap between hungry professionals, students, and reliable local tiffin service providers. We take the hassle out of meal subscriptions, tracking, and payments.
+      </p>
+      <div class="cta-group">
+        <a href="/subscriptions" class="btn btn-primary">Explore Meal Plans</a>
+        <a href="/partner" class="btn btn-secondary">Become a Kitchen Partner</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Stats Bar -->
+  <section class="stats-section">
+    <div class="container grid-4">
+      <div class="stat-card" *ngFor="let stat of stats">
+        <h2 class="stat-value">{{ stat.value }}</h2>
+        <p class="stat-label">{{ stat.label }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Mission Section -->
+  <section class="mission-section">
+    <div class="container grid-2">
+      <div class="mission-text">
+        <h2>Our Mission</h2>
+        <p>
+          In fast-paced cities, finding hygienic, affordable, home-style food daily is a constant challenge. On the flip side, thousands of talented local cooks and mess operators struggle with manual record-keeping, lost payments, and inefficient delivery routines.
+        </p>
+        <p>
+          <strong>TIFFIN FLOW</strong> was built to digitize and automate the entire tiffin supply chain. We empower consumers with full control over their meals while helping local food businesses scale effortlessly through our automated SaaS platform.
+        </p>
+      </div>
+      <div class="mission-highlights">
+        <div class="highlight-card">
+          <h3>For Meal Subscribers</h3>
+          <ul>
+            <li>No rigid contracts—flexibility to pause anytime</li>
+            <li>Transparent daily meal logging</li>
+            <li>Hygienic and verified provider network</li>
+          </ul>
+        </div>
+        <div class="highlight-card">
+          <h3>For Tiffin Providers</h3>
+          <ul>
+            <li>Automated customer ledger and payment reminders</li>
+            <li>Optimized daily delivery route mapping</li>
+            <li>Zero paperwork for daily count management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Choose <span class="highlight">TIFFIN FLOW</span>?</h2>
+        <p>Built from the ground up to eliminate common daily meal management pain points.</p>
+      </div>
+      <div class="grid-4">
+        <div class="feature-card" *ngFor="let feature of features">
+          <div class="feature-icon">{{ feature.icon }}</div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Process -->
+  <section class="process-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>A seamless experience from subscription to your dining table.</p>
+      </div>
+      <div class="grid-4">
+        <div class="process-card" *ngFor="let step of processSteps">
+          <span class="step-num">{{ step.number }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Footer Section -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to simplify your daily food routine?</h2>
+      <p>Join thousands of happy subscribers enjoying stress-free home meals every day.</p>
+      <button class="btn btn-primary">Get Started Today</button>
+    </div>
+  </section>
+</div>

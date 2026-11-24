@@ -1,0 +1,774 @@
+<div class="dashboard-container">
+  
+
+  <!-- Page Scroll Container -->
+  <div class="scrollable-content">
+    <!-- HERO SECTION WITH BACKGROUND IMAGE SLIDESHOW OVERLAY ONLY -->
+    <div class="hero-wrapper">
+      <div class="slideshow-background">
+        @for (slide of slides; track slide.url; let i = $index) {
+          <div
+            class="slide-item"
+            [class.active]="i === currentSlideIndex()"
+            [style.background-image]="'url(' + slide.url + ')'"
+          ></div>
+        }
+        <div class="dark-overlay"></div>
+      </div>
+
+      <main class="hero-section">
+        <div class="hero-content">
+          <div class="badge">☁️ BEST CLOUD KITCHEN & TIFFIN SAAS</div>
+          <h1 class="welcome-title">WELCOME TO</h1>
+          <h2 class="brand-title">TIFFIN FLOW</h2>
+
+          <p class="subtitle">Savor authentic flavors crafted by top cloud kitchen chefs daily.</p>
+
+          <div class="cta-group">
+            <button class="btn btn-primary" (click)="scrollToSection('subscriptions')">
+              View Plans (20% OFF)
+            </button>
+            <button class="btn btn-secondary" (click)="toggleMenu()">Explore Menu</button>
+          </div>
+
+          <div class="features-row">
+            <span>⚡ Express AI Dispatch</span>
+            <span>•</span>
+            <span>🥗 100% Fresh Daily Prep</span>
+            <span>•</span>
+            <span>⭐ 4.98 Rated Cloud Network</span>
+          </div>
+        </div>
+
+        
+      </main>
+    </div>
+
+    <!-- SOLID NAVY BLUE SECTION CONTAINER FOR REST OF THE PAGE -->
+
+    <div class="navy-blue-sections">
+      <!-- SECTION 1: WHAT SETS US APART -->
+      <section class="content-section glass-section">
+        <div class="section-header">
+          <span class="section-tag">KOLKATA GROWTH STORY</span>
+          <h2>Scaling Cloud Kitchens Across Kolkata</h2>
+          <p>
+            How Tiffin Flow empowered local kitchens to serve thousands daily across the City of
+            Joy.
+          </p>
+        </div>
+
+        <!-- Key City Stats Banner -->
+        <div class="kolkata-stats-banner">
+          <div class="stat-item">
+            <span class="stat-number">3,500+</span>
+            <span class="stat-label">Daily Orders Delivered</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">18+</span>
+            <span class="stat-label">Kolkata Micro-Hubs</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">4.92 ★</span>
+            <span class="stat-label">Average Customer Rating</span>
+          </div>
+        </div>
+
+        <div class="case-studies-grid">
+          <!-- Founder & Visionary Card -->
+          <div class="case-card founder-card">
+            <div class="card-badge">LEADERSHIP</div>
+            <div class="case-metric">City-Wide Expansion</div>
+            <h3>Rajarshi Shai</h3>
+            <span class="case-role">Founder & Chief Visionary, Tiffin Flow Kolkata</span>
+            <p class="case-desc">
+              Under Rajarshi's leadership, Tiffin Flow transformed traditional tiffin distribution
+              into an AI-powered cloud kitchen network across Salt Lake, New Town, Park Street, and
+              South Kolkata.
+            </p>
+            <blockquote class="case-quote">
+              "Our goal was simple: bring authentic, homestyle Bengali and global gourmet meals to
+              Kolkata's busy workforce with unmatched speed and hygienic thermal delivery."
+            </blockquote>
+          </div>
+
+          <!-- Operational Pillars Card -->
+          <div class="case-card">
+            <div class="card-badge">CORE BUSINESS</div>
+            <div class="case-metric">100% Thermal Hot Prep</div>
+            <h3>Operational Excellence</h3>
+            <span class="case-role">The Engine Behind Tiffin Flow</span>
+            <p class="case-desc">
+              By combining central production units with neighborhood dispatch hubs, we ensure meal
+              freshness within 30 minutes of preparation across Kolkata.
+            </p>
+            <ul class="business-pillars-list">
+              <li>
+                ⚡ <strong>AI Dispatch Route Optimization:</strong> Cut delivery delays by 42%.
+              </li>
+              <li>
+                🍱 <strong>Eco-Friendly Packaging:</strong> 100% biodegradable, spill-proof
+                containers.
+              </li>
+              <li>
+                🥗 <strong>Zero-Preservative Kitchens:</strong> Fresh morning prep using local
+                markets.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION : CASE STUDIES -->
+      <section class="content-section glass-section">
+        <div class="section-header">
+          <span class="section-tag">REAL IMPACT</span>
+          <h2>Case Studies & Success Stories</h2>
+        </div>
+
+        <div class="case-studies-grid">
+          @for (study of caseStudies; track study.id) {
+            <div class="case-card">
+              <div class="case-metric">{{ study.metric }}</div>
+              <h3>{{ study.client }}</h3>
+              <span class="case-role">{{ study.role }}</span>
+              <p class="case-desc">{{ study.description }}</p>
+              <blockquote class="case-quote">{{ study.quote }}</blockquote>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- SECTION 1: WHAT SETS US APART -->
+      <section class="content-section glass-section">
+        <div class="section-header">
+          <span class="section-tag">THE DIFFERENCE</span>
+          <h2>Why Tiffin Flow Beats Traditional Tiffins</h2>
+          <p>We combine smart logistics, nutritionist engineering, and fine dining chefs.</p>
+        </div>
+
+        <div class="comparison-grid">
+          <div class="comp-card standard">
+            <h3>Traditional Tiffin Services</h3>
+            <ul>
+              <li>❌ Monotonous fixed weekly menus</li>
+              <li>❌ Lukewarm or soggy food delivery</li>
+              <li>❌ Uncalibrated oil and calorie levels</li>
+              <li>❌ Phone-call subscriptions and manual billing</li>
+              <li>❌ Fixed delivery slots with no real-time tracking</li>
+            </ul>
+          </div>
+
+          <div class="comp-card tiffin-flow">
+            <div class="popular-badge">NEXT-GEN</div>
+            <h3>✨ Tiffin Flow Experience</h3>
+            <ul>
+              <li>✅ AI-driven dynamic menu customizer</li>
+              <li>✅ Patented SmartThermal™ heated delivery boxes</li>
+              <li>✅ Calorie & macro-balanced meals by certified chefs</li>
+              <li>✅ Automated 1-click pause, swap, or resume subscriptions</li>
+              <li>✅ Live GPS courier tracking to your doorstep</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: PREMIUM SIGNATURE DISHES -->
+      <section class="content-section chef-specials-section">
+        <div class="section-header">
+          <span class="section-tag">GULINARY EXCELLENCE</span>
+          <h2>Our Chef-Crafted Premium Dishes</h2>
+          <p>
+            Prepared daily with organic ingredients, farm-fresh produce, and authentic local spices.
+          </p>
+
+          
+        </div>
+
+        <div class="premium-dishes-grid">
+          @for (dish of filteredDishes(); track dish.id) {
+            <div class="premium-dish-card">
+              <!-- Dish Image Banner with Overlay Floating Elements -->
+              <div class="dish-image" [style.background-image]="'url(' + dish.image + ')'">
+                <div class="image-overlay"></div>
+
+                <span class="chef-tag">{{ dish.chefTag }}</span>
+
+                <span class="price-badge">${{ dish.price.toFixed(2) }}</span>
+
+                <span class="diet-indicator" [class.veg]="dish.isVeg" [class.non-veg]="!dish.isVeg">
+                  {{ dish.isVeg ? '🟢 VEG' : '🔴 NON-VEG' }}
+                </span>
+              </div>
+
+              <!-- Dish Info Card Body -->
+              <div class="dish-body">
+                <div class="dish-title-row">
+                  <h3>{{ dish.name }}</h3>
+                  <span class="rating">⭐{{ dish.rating }}</span>
+                </div>
+
+                <p class="dish-description">{{ dish.description }}</p>
+
+                <div class="dish-meta">
+                  <span class="meta-pill">⏱️ {{ dish.prepTime }}</span>
+                  <span class="meta-pill">🔥 {{ dish.calories }}</span>
+                </div>
+
+                <div class="dish-footer">
+                  <button class="btn-quick-add" (click)="addToCart(dish)">
+                    <span>+ Quick Add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+
+      <!-- SECTION 3: FLEXIBLE SUBSCRIPTION PLANS (WITH 20% ANNUAL DISCOUNT) -->
+      <section class="content-section glass-section" id="subscriptions">
+        <div class="membership-hero-card">
+          <div class="membership-badge">LIMITED TIME OFFER</div>
+          <span class="section-tag"> PREMIUM SAVINGS</span>
+
+          <h2>Get Flat 20% OFF with Our Yearly Membership</h2>
+
+          <p class="membership-desc">
+            Unlock priority thermal delivery across Kolkata, zero packaging fees, and flexible
+            meal-pause options all year long.
+          </p>
+
+          <div class="discount-highlight">
+            <span class="discount-percent">20% OFF</span>
+            <span class="discount-text">Applied automatically on all annual meal passes</span>
+          </div>
+
+          <div class="membership-action">
+            
+            <a routerLink="/subscription" class="btn-membership-cta">
+            <span>Explore Yearly Plans</span>
+            <span class="arrow">→</span>
+            
+          </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: BUSINESS MODELS & USE CASES -->
+      <section class="business-section">
+        <!-- Section Header -->
+        <div class="section-header">
+          <div class="badge-wrapper">
+            <span class="section-badge">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"
+                />
+              </svg>
+              Enterprise Ecosystems
+            </span>
+          </div>
+          <h2>Built for Scale Across Every Dining Sector</h2>
+          <p>
+            From tech hubs to home kitchens, Tiffin Flow automates complex subscription logistics,
+            batch scheduling, and recurring revenue.
+          </p>
+        </div>
+
+        <!-- Models Grid -->
+        <div class="models-grid">
+          <!-- Card 1: Corporate -->
+          <article class="model-card">
+            <div class="card-glow"></div>
+            <div class="card-content">
+              <header class="card-header">
+                <div class="icon-box emerald">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+                    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+                    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+                    <path d="M10 6h4" />
+                    <path d="M10 10h4" />
+                    <path d="M10 14h4" />
+                    <path d="M10 18h4" />
+                  </svg>
+                </div>
+                <span class="tag-pill">B2B Corporate</span>
+              </header>
+
+              <main class="card-body">
+                <h3>Corporate & Tech Parks</h3>
+                <p>
+                  Automate tax-exempt meal stipends, subsidized office lunches, and flexible shift
+                  meal plans with zero HR overhead.
+                </p>
+              </main>
+
+              <footer class="card-footer">
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Employee self-serve portal</span>
+                </div>
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Consolidated monthly B2B billing</span>
+                </div>
+              </footer>
+            </div>
+          </article>
+
+          <!-- Card 2: Cloud Kitchens -->
+          <article class="model-card">
+            <div class="card-glow"></div>
+            <div class="card-content">
+              <header class="card-header">
+                <div class="icon-box amber">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M6 13.87A8 8 0 0 1 12 4a8 8 0 0 1 6 9.87" />
+                    <path d="M4 17h16a2 2 0 0 1 0 4H4a2 2 0 0 1 0-4Z" />
+                    <path d="M12 2v2" />
+                  </svg>
+                </div>
+                <span class="tag-pill">B2C Marketplace</span>
+              </header>
+
+              <main class="card-body">
+                <h3>Cloud Kitchens & Home Chefs</h3>
+                <p>
+                  Turn unpredictable daily orders into predictable monthly recurring revenue with
+                  route optimization and ingredient forecasts.
+                </p>
+              </main>
+
+              <footer class="card-footer">
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Automated subscriber renewals</span>
+                </div>
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Batch cooking & prep analytics</span>
+                </div>
+              </footer>
+            </div>
+          </article>
+
+          <!-- Card 3: Campus Pass -->
+          <article class="model-card">
+            <div class="card-glow"></div>
+            <div class="card-content">
+              <header class="card-header">
+                <div class="icon-box blue">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                  </svg>
+                </div>
+                <span class="tag-pill">Campus Pass</span>
+              </header>
+
+              <main class="card-body">
+                <h3>Campus & Student Mess</h3>
+                <p>
+                  Flexible digital meal pass plans for university students with QR-based redemption,
+                  meal pauses for holidays, and night options.
+                </p>
+              </main>
+
+              <footer class="card-footer">
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Instant meal-pause functionality</span>
+                </div>
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Semester & monthly pass tiers</span>
+                </div>
+              </footer>
+            </div>
+          </article>
+
+          <!-- Card 4: Gated Societies -->
+          <article class="model-card">
+            <div class="card-glow"></div>
+            <div class="card-content">
+              <header class="card-header">
+                <div class="icon-box purple">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                </div>
+                <span class="tag-pill">Hyper-Local</span>
+              </header>
+
+              <main class="card-body">
+                <h3>Gated Societies & Hubs</h3>
+                <p>
+                  Aggregate high-density deliveries in residential complexes to minimize last-mile
+                  logistics costs via consolidated drop-offs.
+                </p>
+              </main>
+
+              <footer class="card-footer">
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Batch delivery dispatching</span>
+                </div>
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Society promo integration</span>
+                </div>
+              </footer>
+            </div>
+          </article>
+
+          <!-- Card 5: Healthcare -->
+          <article class="model-card">
+            <div class="card-glow"></div>
+            <div class="card-content">
+              <header class="card-header">
+                <div class="icon-box rose">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                    />
+                    <path d="M12 5v14" />
+                  </svg>
+                </div>
+                <span class="tag-pill">Specialized</span>
+              </header>
+
+              <main class="card-body">
+                <h3>Healthcare & Care Facilities</h3>
+                <p>
+                  Manage clinical meal plans, strict dietary tags (diabetic, low-sodium), and
+                  scheduled nutrition tracking for recovery patients.
+                </p>
+              </main>
+
+              <footer class="card-footer">
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Strict allergen & diet tags</span>
+                </div>
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Dietitian-approved workflows</span>
+                </div>
+              </footer>
+            </div>
+          </article>
+
+          <!-- Card 6: Co-working Hubs -->
+          <article class="model-card">
+            <div class="card-glow"></div>
+            <div class="card-content">
+              <header class="card-header">
+                <div class="icon-box cyan">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect width="20" height="14" x="2" y="3" rx="2" />
+                    <line x1="8" x2="16" y1="21" y2="21" />
+                    <line x1="12" x2="12" y1="17" y2="21" />
+                  </svg>
+                </div>
+                <span class="tag-pill">Flexible Office</span>
+              </header>
+
+              <main class="card-body">
+                <h3>Co-working Hubs</h3>
+                <p>
+                  Provide floating desks and freelancers with flexible daily or weekly meal passes
+                  integrated directly into space management apps.
+                </p>
+              </main>
+
+              <footer class="card-footer">
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Pay-as-you-eat credits</span>
+                </div>
+                <div class="feature-item">
+                  <svg
+                    class="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Kiosk mode for shared pantries</span>
+                </div>
+              </footer>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="fd-section fd-glass-container">
+        <div class="fd-header">
+          <span class="fd-badge-tag">TASTE THE DIFFERENCE</span>
+          <h2 class="fd-title">Explore Our Dishes & Authentic Reviews</h2>
+          <p class="fd-subtitle">
+            Discover our signature culinary creations alongside genuine feedback from our valued
+            guests.
+          </p>
+        </div>
+
+        <!-- Featured Dishes & Genuine Reviews Grid -->
+        <div class="fd-grid">
+          @for (item of featuredItems; track item.id) {
+            <article class="fd-card">
+              <!-- Header row with Dish Name & Rating Badge -->
+              <div class="fd-card-top">
+                <h3 class="fd-dish-name">{{ item.name }}</h3>
+                <span class="fd-rating-badge" *ngIf="item.rating">★ {{ item.rating }}</span>
+              </div>
+
+              <span class="fd-dish-category">{{ item.category }}</span>
+              <p class="fd-dish-description">{{ item.description }}</p>
+
+              <!-- Genuine Guest Review -->
+              <blockquote class="fd-review-quote">
+                <p class="fd-review-text">"{{ item.review }}"</p>
+                <cite class="fd-review-author">— {{ item.reviewerName }}</cite>
+              </blockquote>
+            </article>
+          }
+        </div>
+
+        <!-- Call to Action: Menu Page Button -->
+        <div class="fd-cta-wrapper">
+          <a routerLink="/menu" class="fd-menu-button">
+            <span>Explore Full Menu</span>
+            <i class="fd-arrow-icon" aria-hidden="true">→</i>
+          </a>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+
+  

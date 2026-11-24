@@ -1,0 +1,349 @@
+<div class="checkout-container">
+
+  <!-- STEPPER NAVIGATION -->
+  <header class="stepper-wrapper">
+    <div 
+      class="step-item" 
+      [class.active]="currentStep() === 'cart' || currentStep() === 'delivery' || currentStep() === 'payment' || currentStep() === 'review' || currentStep() === 'confirmed'" 
+      (click)="setStep('cart')"
+    >
+      <span class="step-number">01</span>
+      <span class="step-label">Cart</span>
+    </div>
+    <div class="step-divider"></div>
+    
+    <div 
+      class="step-item" 
+      [class.active]="currentStep() === 'delivery' || currentStep() === 'payment' || currentStep() === 'review' || currentStep() === 'confirmed'" 
+      (click)="setStep('delivery')"
+    >
+      <span class="step-number">02</span>
+      <span class="step-label">Delivery</span>
+    </div>
+    <div class="step-divider"></div>
+    
+    <div 
+      class="step-item" 
+      [class.active]="currentStep() === 'payment' || currentStep() === 'review' || currentStep() === 'confirmed'" 
+      (click)="setStep('payment')"
+    >
+      <span class="step-number">03</span>
+      <span class="step-label">Payment</span>
+    </div>
+    <div class="step-divider"></div>
+
+    <div 
+      class="step-item" 
+      [class.active]="currentStep() === 'review' || currentStep() === 'confirmed'" 
+      (click)="setStep('review')"
+    >
+      <span class="step-number">04</span>
+      <span class="step-label">Review</span>
+    </div>
+  </header>
+
+  <!-- PROCESSING OVERLAY -->
+  @if (isSubmitting() || isCheckingOut()) {
+    <div class="processing-overlay">
+      <div class="spinner"></div>
+      <h2>Securing Your Tiffin...</h2>
+      <p>Please do not refresh or close this window.</p>
+    </div>
+  }
+
+  <!-- ORDER CONFIRMED SCREEN -->
+  @if (orderConfirmed()) {
+    <main class="success-card">
+      <div class="success-icon">✓</div>
+      <h1>Order Confirmed!</h1>
+      <p class="order-id">Order ID: <strong>{{ placedOrderId() }}</strong></p>
+      <p class="success-msg">Your delicious meal is being prepared by our chefs.</p>
+      
+      <div class="confirmation-details">
+        <div><span>Delivery Address:</span> <strong>{{ selectedAddress().details }}</strong></div>
+        <div><span>Estimated Arrival:</span> <strong>{{ deliveryType() === 'ASAP' ? '25 - 30 Mins' : selectedTimeSlot() }}</strong></div>
+        <div><span>Total Paid:</span> <strong>₹{{ grandTotal() }}</strong></div>
+        <div><span>Payment Mode:</span> <strong>{{ selectedPayment().name }}</strong></div>
+      </div>
+
+      <button class="btn-primary" [routerLink]="['/orders']">Track Your Order 🛵</button>
+    </main>
+  }
+
+  <!-- MAIN CHECKOUT FLOW -->
+  @if (!orderConfirmed() && !isSubmitting()) {
+    <main class="checkout-layout">
+      <section class="checkout-main">
+
+        <!-- STEP 1: CART -->
+        @if (currentStep() === 'cart') {
+          <article class="card-section">
+            <h2>🛒 Your Food Cart ({{ itemCount() }} items)</h2>
+
+            <div class="free-delivery-banner">
+              @if (remainingForFreeDelivery() > 0) {
+                <p>Add <strong>₹{{ remainingForFreeDelivery() }}</strong> more for FREE Delivery!</p>
+              } @else {
+                <p>🎉 You unlocked <strong>FREE Delivery</strong>!</p>
+              }
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="freeDeliveryProgress()"></div>
+              </div>
+            </div>
+
+            @if (cartItems().length === 0) {
+              <div class="empty-cart">
+                <p>Your cart is empty.</p>
+                <button class="btn-secondary" [routerLink]="['/menu']">Explore Menu</button>
+              </div>
+            }
+
+            <div class="cart-items-list">
+              @for (item of cartItems(); track trackById($index, item)) {
+                <div class="cart-item">
+                  @if (item.image) {
+                    <img [src]="item.image" [alt]="item.name" class="item-img" />
+                  }
+                  <div class="item-info">
+                    <p class="item-title">{{ item.name }}</p>
+                    <span class="item-plan">{{ item.planType }}</span>
+                    <p class="item-unit-price">₹{{ item.unitPrice }}</p>
+                  </div>
+                  <div class="qty-controls">
+                    <button type="button" (click)="decreaseQuantity(item.id)">-</button>
+                    <span>{{ item.quantity }}</span>
+                    <button type="button" (click)="increaseQuantity(item.id)">+</button>
+                  </div>
+                  <div class="item-total-price">
+                    ₹{{ item.unitPrice * item.quantity }}
+                  </div>
+                  <button type="button" class="btn-remove" (click)="removeItem(item.id)">✕</button>
+                </div>
+              }
+            </div>
+
+            <button type="button" class="btn-primary" (click)="proceedToDelivery()" [disabled]="cartItems().length === 0">
+              Proceed to Delivery →
+            </button>
+          </article>
+        }
+
+        <!-- STEP 2: DELIVERY ADDRESS & TIME -->
+        @if (currentStep() === 'delivery') {
+          <article class="card-section">
+            <h2>📍 1. Select Delivery Address</h2>
+            <div class="address-grid">
+              @for (addr of addresses(); track addr.id) {
+                <div 
+                  class="address-card" 
+                  [class.selected]="selectedAddressId() === addr.id"
+                  (click)="selectAddress(addr.id)"
+                >
+                  <div class="address-type-badge">{{ addr.type }}</div>
+                  <p class="address-details">{{ addr.details }}</p>
+                  <p class="address-sub">{{ addr.city }} - {{ addr.pincode }}</p>
+                </div>
+              }
+            </div>
+          </article>
+
+          <article class="card-section">
+            <h2>⏰ 2. Delivery Time</h2>
+            <div class="delivery-toggle">
+              <button 
+                type="button" 
+                [class.active]="deliveryType() === 'ASAP'"
+                (click)="setDeliveryType('ASAP')"
+              >
+                ⚡ ASAP (25-30 Mins)
+              </button>
+              <button 
+                type="button" 
+                [class.active]="deliveryType() === 'Schedule'"
+                (click)="setDeliveryType('Schedule')"
+              >
+                📅 Schedule Delivery
+              </button>
+            </div>
+
+            @if (deliveryType() === 'Schedule') {
+              <div class="time-slots">
+                @for (slot of timeSlots; track slot) {
+                  <button 
+                    type="button" 
+                    class="slot-btn" 
+                    [class.selected]="selectedTimeSlot() === slot"
+                    (click)="selectTimeSlot(slot)"
+                  >
+                    {{ slot }}
+                  </button>
+                }
+              </div>
+            }
+
+            <button type="button" class="btn-primary" (click)="proceedToPayment()">
+              Proceed to Payment →
+            </button>
+          </article>
+        }
+
+        <!-- STEP 3: PAYMENT OPTION -->
+        @if (currentStep() === 'payment') {
+          <article class="card-section" [formGroup]="checkoutForm">
+            <h2>💳 Select Payment Option</h2>
+            <div class="payment-options">
+              @for (pm of paymentMethods; track pm.id) {
+                <label 
+                  class="payment-radio" 
+                  [class.selected]="selectedPaymentId() === pm.id"
+                  (click)="selectPayment(pm.id)"
+                >
+                  <input 
+                    type="radio" 
+                    name="paymentMethod" 
+                    [value]="pm.id" 
+                    [checked]="selectedPaymentId() === pm.id"
+                  >
+                  <div class="payment-text">
+                    <strong>{{ pm.name }}</strong>
+                    <small>{{ pm.description }}</small>
+                  </div>
+                </label>
+              }
+            </div>
+
+            @if (selectedPaymentId() === 'upi') {
+              <div class="upi-box">
+                <label for="upiId">Enter UPI ID</label>
+                <input id="upiId" type="text" formControlName="upiId" placeholder="username@upi" />
+                @if (checkoutForm.get('upiId')?.invalid && checkoutForm.get('upiId')?.touched) {
+                  <small class="error-text">Please enter a valid UPI ID</small>
+                }
+              </div>
+            }
+
+            <div class="note-box">
+              <label for="orderNote">Special Instructions for Delivery</label>
+              <textarea id="orderNote" formControlName="orderNote" rows="2" placeholder="e.g. Leave with security guard, don't ring bell..."></textarea>
+            </div>
+
+            <button type="button" class="btn-primary" (click)="proceedToReview()">
+              Review Order →
+            </button>
+          </article>
+        }
+
+        <!-- STEP 4: REVIEW & CONFIRM -->
+        @if (currentStep() === 'review') {
+          <article class="card-section">
+            <h2>📋 Review Your Order</h2>
+            
+            <div class="review-block">
+              <h3>Delivery Details</h3>
+              <p><strong>Address:</strong> {{ selectedAddress().type }} - {{ selectedAddress().details }}, {{ selectedAddress().city }} ({{ selectedAddress().pincode }})</p>
+              <p><strong>Time:</strong> {{ deliveryType() === 'ASAP' ? 'ASAP (25-30 Mins)' : selectedTimeSlot() }}</p>
+            </div>
+
+            <div class="review-block">
+              <h3>Payment Method</h3>
+              <p><strong>{{ selectedPayment().name }}</strong> ({{ selectedPayment().description }})</p>
+            </div>
+
+            <div class="review-block">
+              <h3>Items</h3>
+              @for (item of cartItems(); track trackById($index, item)) {
+                <div class="review-item">
+                  <span>{{ item.name }} x {{ item.quantity }}</span>
+                  <span>₹{{ item.unitPrice * item.quantity }}</span>
+                </div>
+              }
+            </div>
+
+            <button type="button" class="btn-primary" (click)="placeOrder()">
+              Confirm & Place Order • ₹{{ grandTotal() }}
+            </button>
+          </article>
+        }
+
+      </section>
+
+      <!-- RIGHT SIDEBAR SUMMARY -->
+      <aside class="checkout-sidebar">
+        <div class="summary-card">
+          <h3>Order Summary</h3>
+
+          <div class="coupon-section">
+            <div class="coupon-input-group">
+              <input 
+                type="text" 
+                placeholder="Coupon Code" 
+                [value]="couponCode()" 
+                (input)="couponCode.set($any($event.target).value)" 
+              />
+              @if (appliedDiscount() > 0) {
+                <button type="button" class="btn-remove-coupon" (click)="removeCoupon()">Remove</button>
+              } @else {
+                <button type="button" class="btn-apply" (click)="applyCoupon()">Apply</button>
+              }
+            </div>
+            @if (couponMessage()) {
+              <small [class.success-text]="couponSuccess()" [class.error-text]="!couponSuccess()">
+                {{ couponMessage() }}
+              </small>
+            }
+          </div>
+
+          <hr class="divider" />
+
+          <div class="price-breakdown">
+            <div class="row">
+              <span>Item Subtotal ({{ itemCount() }} items)</span>
+              <span>₹{{ subtotal() }}</span>
+            </div>
+            <div class="row discount">
+              <span>Coupon Discount</span>
+              <span>-₹{{ appliedDiscount() }}</span>
+            </div>
+            <div class="row">
+              <span>Delivery Fee</span>
+              <span>{{ deliveryFee() === 0 ? 'FREE' : '₹' + deliveryFee() }}</span>
+            </div>
+            <div class="row">
+              <span>Taxes & GST (5%)</span>
+              <span>₹{{ taxes() }}</span>
+            </div>
+
+            <hr class="divider" />
+
+            <div class="row total-row">
+              <span>Grand Total</span>
+              <span class="total-amount">₹{{ grandTotal() }}</span>
+            </div>
+          </div>
+
+          @if (savings() > 0) {
+            <div class="savings-badge">
+              🎉 You are saving ₹{{ savings() }} on this order!
+            </div>
+          }
+
+          <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+            <label class="terms-checkbox">
+              <input type="checkbox" formControlName="termsAccepted" />
+              <span>I agree to the Terms & Cancellation Policy</span>
+            </label>
+
+            <button 
+              type="submit" 
+              class="btn-primary place-order-btn"
+              [disabled]="checkoutForm.invalid || cartItems().length === 0"
+            >
+              🔒 PLACE ORDER • ₹{{ grandTotal() }}
+            </button>
+          </form>
+        </div>
+      </aside>
+
+    </main>
+  }
+</div>
